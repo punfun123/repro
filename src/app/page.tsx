@@ -21,7 +21,7 @@ export default async function Home() {
       </div>
       <p className="author-signature">— REPRO Developer</p>
       <p className="author-note">I wrote this as a creative origin story. My <Link href="/build-log">build log</Link> records what I’ve actually built and tested.</p>
-      <img className="hero-mascot" src="/repro-bug.png" alt="REPRO’s red pixel bug" width="360" height="360" fetchPriority="high" />
+      <div className="hero-mascot"><img src="/repro-bug.png" alt="REPRO’s red pixel bug" width="360" height="360" fetchPriority="high" /></div>
     </header>
 
     <div className="story-chapters">
