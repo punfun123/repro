@@ -20,7 +20,7 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Visit http://127.0.0.1:3000. Without credentials, the readme, source and build log work; the lab explains which service is unavailable. No code executes in the web process.
+Visit http://127.0.0.1:3000. Without credentials, the story, source and build log work; the lab explains which service is unavailable. No code executes in the web process.
 
 ```powershell
 npm run typecheck
@@ -64,11 +64,13 @@ Publishing requires an explicit confirmation preview. It exposes only a status r
 
 ## Routes and actual source
 
-- `/` — complete narrative, marked examples and limited 2D CSS animation.
+- `/` — the complete first-person narrative, original chapter anchors and clearly marked examples.
 - `/lab` — input form, real server progress, original evidence, candidate diff, unchanged-test verification and limitations.
 - `/source` — explicit whitelist of real files, syntax highlighting and GitHub links.
 - `/build-log` and `/build-log/[slug]` — Markdown implementation notes.
 - `/lab/receipt/[id]` — explicitly published minimal receipt.
+
+All routes share the story-led navigation and normal page footer. The Source file picker stays inside its page; the Lab keeps its input and evidence views. A decorative Canvas draws sparse red pixel paths at the outer edges, capped at 20 fps on desktop and 12 fps below 760px, with device pixel ratio capped at 1.5. It stops when the page is hidden. The footer motion toggle saves a local preference; the system's reduced-motion preference always takes priority and leaves a static background. This decoration never represents experiment activity.
 
 ## GitHub → Vercel
 
