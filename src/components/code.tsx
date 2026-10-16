@@ -1,0 +1,4 @@
+export function Code({ text, language = 'typescript' }: { text: string; language?: string }) {
+  const tokens = text.split(/(\/\/[^\n]*|\/\*[\s\S]*?\*\/|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`|\b(?:import|from|export|const|let|return|async|await|function|if|else|throw|new|try|catch|finally|type|interface|true|false|null|undefined)\b|\b\d+\b)/g);
+  return <pre className="code-block"><code data-language={language}>{tokens.map((token, i) => <span key={i} className={token.startsWith('//') || token.startsWith('/*') ? 'syntax-comment' : /^["'`]/.test(token) ? 'syntax-string' : /^(?:import|from|export|const|let|return|async|await|function|if|else|throw|new|try|catch|finally|type|interface)$/.test(token) ? 'syntax-keyword' : /^(true|false|null|undefined|\d+)$/.test(token) ? 'syntax-value' : undefined}>{token}</span>)}</code></pre>;
+}
