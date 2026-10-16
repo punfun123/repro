@@ -2,31 +2,31 @@
 
 ## I GOT TIRED OF AI TELLING ME MY CODE WAS FIXED.
 
-*The story behind an AI that has to prove its answers.*
+*Why I'm building an AI that has to prove its answers.*
 
 ### 01 — IT SAID "FIXED."
 
-There's a particular kind of frustration that every developer knows.
+The frustration I kept coming back to was simple.
 
-You spend hours staring at a piece of code that should work.
+I'd spend hours staring at a piece of code that should work.
 
-Everything looks right.
+Everything would look right to me.
 
-The logic makes sense. The functions are there. Nothing immediately stands out as broken.
+The logic made sense. The functions were there. I couldn't immediately see what was broken.
 
-But somewhere, something is wrong.
+But somewhere, something was wrong.
 
-So you do what millions of developers now do.
+So I'd do what had become an ordinary part of my workflow.
 
-You ask AI.
+I'd ask AI.
 
-You paste the error message, explain what you expected to happen, and wait.
+I'd paste the error message, explain what I expected to happen, and wait.
 
-A few seconds later, you get an answer.
+A few seconds later, I'd have an answer.
 
-The AI explains the problem with impressive confidence. It identifies a likely cause, rewrites a few lines, and gives you a solution.
+The AI would explain the problem with impressive confidence. It would identify a likely cause, rewrite a few lines, and hand me a solution.
 
-Sometimes it even says:
+Sometimes it would even say:
 
 "The issue has been fixed."
 
@@ -50,7 +50,7 @@ I kept thinking about the difference between those two things.
 
 **Writing a fix and proving a fix are not the same job.**
 
-Yet we increasingly treat them as if they are.
+I realized how easy it had become for me to treat them as if they were.
 
 ### 02 — THE PROBLEM WASN'T THE CODE.
 
@@ -60,15 +60,15 @@ We now have AI systems capable of writing entire applications, explaining compli
 
 But generating code is only one part of software engineering.
 
-A developer doesn't know something works just because the code looks reasonable.
+I don't know that my code works just because it looks reasonable.
 
-You execute it.
+I have to execute it.
 
-You observe the behavior.
+I have to observe what it does.
 
-You compare the result with what was supposed to happen.
+I have to compare the result with what I intended to happen.
 
-When something breaks, you attempt to make it break again.
+And when something breaks, I try to make it break again.
 
 Because a bug that cannot be reproduced is difficult to understand.
 
@@ -76,7 +76,7 @@ And a fix that hasn't been tested is still a hypothesis.
 
 That is the part I felt was missing.
 
-We were asking AI to behave like software engineers, but often accepting answers that no careful engineer would consider verified.
+I was asking AI to help me engineer software. I wanted to hold its answers to the same standard I would hold my own work to.
 
 A model could explain an error beautifully while misunderstanding its actual cause.
 
@@ -110,11 +110,11 @@ That might sound backward.
 
 Why would anyone build an AI whose first objective is to break software?
 
-Because reproducing a failure tells you something important.
+Because I can learn something concrete from a failure I can reproduce.
 
 It turns a vague complaint into an observable event.
 
-Consider a simple example.
+Here's the simplest example I can use to explain what I mean.
 
 ```javascript
 const user = undefined;
@@ -122,11 +122,11 @@ const user = undefined;
 console.log(user.id);
 ```
 
-You don't need an advanced model to suspect what's wrong here.
+I can suspect what's wrong here without asking a model.
 
 But suspicion isn't the interesting part.
 
-The interesting part is what happens when you execute it.
+What I want to see is what happens when the code actually runs.
 
 Does the program throw an exception?
 
@@ -136,7 +136,7 @@ What does the runtime actually report?
 
 Can the failure be triggered consistently?
 
-Now imagine a more complicated version of the same problem, buried inside an unfamiliar codebase.
+Now I imagine that same problem buried inside a codebase I don't know yet.
 
 The AI might propose several different explanations.
 
@@ -154,9 +154,9 @@ Only then attempt a fix.
 
 That one change in the order of operations became the foundation for everything.
 
-Don't start by proving that the AI is right.
+I don't want to begin by defending the AI's first answer.
 
-**Start by finding out what is actually wrong.**
+**I want to begin by finding out what is actually wrong.**
 
 ### 04 — I CALLED IT REPRO.
 
@@ -164,7 +164,7 @@ REPRO comes from one of the most useful concepts in debugging:
 
 A reproducible bug.
 
-If someone tells you their software is broken, the first useful question is often:
+If someone tells me their software is broken, the first useful question I can ask is:
 
 "Can you show me how to reproduce it?"
 
@@ -184,7 +184,7 @@ Not another model that produces a confident explanation and leaves the difficult
 
 A real experimental process.
 
-The idea behind REPRO is simple.
+The idea I wanted to build into REPRO is simple.
 
 Give it something broken.
 
@@ -198,7 +198,7 @@ Then make it run the relevant tests.
 
 And make the result visible.
 
-The process became four words:
+I reduced that process to four words:
 
 **ANALYZE. REPRODUCE. PATCH. VERIFY.**
 
@@ -226,9 +226,9 @@ This became one of the most important principles of REPRO.
 
 A failed experiment is not necessarily a failed product.
 
-Sometimes failure is exactly the information you needed.
+Sometimes a failed attempt gives me exactly the information I need.
 
-Imagine submitting an error to an AI.
+Suppose I submit an error to an AI.
 
 It analyzes the problem, writes a patch, runs the test, and discovers that the same exception still occurs.
 
@@ -242,9 +242,9 @@ The test still reproduces the original issue.
 
 That attempt did not solve the problem.
 
-Those facts matter.
+I want those facts to stay in the record.
 
-Now consider another case.
+There's another case I keep thinking about.
 
 An AI suggests replacing a dangerous property access with optional chaining.
 
@@ -298,7 +298,7 @@ What changed in the proposed patch?
 
 What happened when the modified code was tested?
 
-These questions deserve real answers.
+I want every experiment to leave me with real answers to those questions.
 
 A result should be more than a green checkmark.
 
@@ -340,9 +340,9 @@ Where tests can fail.
 
 Where experiments leave evidence behind.
 
-The website shouldn't need to convince you that the system is intelligent.
+I don't want to ask you to trust a claim about how intelligent the system is.
 
-It should give you something useful to do.
+I want to give you something you can try for yourself.
 
 Paste a small JavaScript bug.
 
@@ -356,7 +356,7 @@ Inspect the proposed correction.
 
 Read the verification output.
 
-That interaction explains the project better than a thousand words about AI.
+I think that interaction explains what I'm trying to build better than a thousand words about AI.
 
 But I also wanted the limits to be visible.
 
@@ -404,11 +404,11 @@ It doesn't.
 
 But because public implementation makes independent examination possible.
 
-Someone should be able to open the repository and see how experiments are executed.
+If you open my repository, I want you to be able to see how an experiment is executed.
 
-They should be able to find the code responsible for verification.
+I want you to be able to find the code responsible for verification.
 
-They should be able to inspect what the program considers a successful test.
+And I want you to be able to inspect exactly what I've allowed the program to call a successful test.
 
 And when I make a mistake in the implementation, I want that mistake to be something I can explain and correct.
 
@@ -418,7 +418,7 @@ I want to build a system whose failures can be investigated.
 
 The public development log is part of that idea.
 
-Each meaningful update should explain what changed and why.
+In each meaningful update, I want to explain what I changed and why.
 
 When a test fails, the result should not disappear just because it makes the system look less impressive.
 
@@ -444,7 +444,7 @@ It cannot validate a patch.
 
 Those capabilities have to exist in the software itself.
 
-$REPRO is the community identity associated with this experiment.
+I see $REPRO as the community identity around this experiment.
 
 A way to recognize and follow a project built around a simple engineering idea:
 
@@ -458,7 +458,7 @@ If there are ever token-linked product features, they should be real, implemente
 
 Until then, the software must stand on its own.
 
-The project should still make sense to someone who never buys the token.
+I want this project to make sense to you even if you never buy the token.
 
 Because if the only interesting part of REPRO were its token, then I wouldn't have built anything worth talking about.
 
@@ -472,9 +472,9 @@ And I don't know how many times its own implementation will need to change.
 
 That's part of the reason I want to keep working on it.
 
-The goal isn't to create an AI that never gets anything wrong.
+I'm not expecting to build an AI that never gets anything wrong.
 
-The goal is to build an AI that is less willing to confuse an answer with evidence.
+I'm trying to build one that is less willing to confuse an answer with evidence.
 
 Something that tests its assumptions.
 
@@ -484,13 +484,13 @@ Something that makes uncertainty visible.
 
 Something that treats a failed test as information rather than an inconvenience.
 
-This project begins with one simple principle.
+That is the principle I want to keep coming back to.
 
-Before you claim the problem is fixed, make the problem happen.
+Before I call a problem fixed, I want to make it happen.
 
-Then show what changed.
+Then I want to show what changed.
 
-Then test again.
+Then I want to test again.
 
 And let the result speak for itself.
 
