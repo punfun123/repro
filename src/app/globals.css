@@ -79,8 +79,8 @@ summary { cursor: pointer; }
 .author-signature { font: 12px/1.8 var(--mono); color: #93928f; margin: 30px 0 0; }
 .author-note { max-width: 630px; font-size: 11px; line-height: 1.7; color: #878683; margin: 12px 0 0; }
 .author-note a { color: #b7b6b3; text-decoration: underline; text-underline-offset: 3px; }
-.hero-mascot { position: absolute; isolation: isolate; z-index: 0; top: 142px; right: 0; width: clamp(245px, 25vw, 350px); background: var(--bg); }
-.hero-mascot img { display: block; width: 100%; height: auto; mix-blend-mode: screen; }
+.hero-mascot { position: absolute; z-index: 0; top: 142px; right: 0; width: clamp(245px, 25vw, 350px); }
+.hero-mascot img { display: block; width: 100%; height: auto; }
 .story-chapter { padding: 44px 16px 35px; border-bottom: 1px solid #343330; scroll-margin-top: 95px; }
 .chapter-heading { display: grid; grid-template-columns: 80px minmax(0,1fr); align-items: baseline; margin-bottom: 25px; }
 .chapter-number { color: var(--red); display: flex; gap: 17px; align-items: center; font: 12px var(--mono); }

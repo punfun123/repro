@@ -107,7 +107,7 @@ export function PixelBackground({ animated }: { animated: boolean }) {
           }
         }
       }
-      for (const image of document.querySelectorAll('.hero-mascot,.story-end>img,.log-footer>img')) {
+      for (const image of document.querySelectorAll('.story-end>img,.log-footer>img')) {
         const rect = image.getBoundingClientRect();
         if (rect.bottom >= 0 && rect.top <= height) maskContext!.fillRect(rect.left - 4, rect.top - 4, rect.width + 8, rect.height + 8);
       }
