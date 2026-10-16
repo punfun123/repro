@@ -17,6 +17,7 @@
   "dependencies": {
     "@next/env": "16.4.2",
     "@supabase/supabase-js": "2.118.0",
+    "@vercel/oidc": "4.0.1",
     "@vercel/sandbox": "3.8.0",
     "diff": "9.0.0",
     "groq-sdk": "1.6.0",

@@ -20,6 +20,8 @@ The VM stopped after its 60-second cap; a follow-up stop call confirmed the stop
 
 The new image defaults to `/vercel`. The adapter now creates `/vercel/sandbox` explicitly and uses absolute paths for every file and command. This prevents a successful file upload followed by a command looking in the wrong directory.
 
+Production readiness now reads OIDC from Vercel's request context through its official helper. Functions receive the token as a request header, so checking only `process.env.VERCEL_OIDC_TOKEN` incorrectly reported missing credentials. The token value is never exposed to the browser or forwarded into submitted code.
+
 ## Verification recorded today
 
 Fifteen automated tests pass, including fixed-test fingerprints, failed candidates with exit code 0, ambiguous input, unrelated original errors, ownership checks, bounded bodies and an Origin regression discovered in browser QA. These orchestration tests use labeled test doubles. The production build and the initial GitHub CI run passed.
