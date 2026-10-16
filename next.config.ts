@@ -1,7 +1,7 @@
 import type { NextConfig } from 'next';
 const config: NextConfig = {
   serverExternalPackages: ['@vercel/sandbox'],
-  outputFileTracingIncludes: { '/*': ['./content/**/*', './src/**/*', './scripts/runner.cjs', './supabase/migrations/*.sql'] },
+  outputFileTracingIncludes: { '/*': ['./content/**/*', './src/**/*', './scripts/runner.cjs', './supabase/bootstrap.sql', './tests/pipeline.test.ts'] },
   async headers() { return [{ source: '/:path*', headers: [
     { key: 'X-Content-Type-Options', value: 'nosniff' },
     { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },

@@ -6,6 +6,8 @@ import { inputSchema, planSchema, type AI, type Evidence, type Plan } from '../s
 import { isSolanaAddress, launchInfo } from '../src/config/project';
 import { sourceFiles } from '../src/source/files';
 import { readFile } from 'node:fs/promises';
+import { saveExperiment, readExperiment } from '../src/experiment/store';
+import { sameOrigin, limitedJson } from '../src/experiment/access';
 
 const input = inputSchema.parse({ code: 'module.exports = user => user.id;', error: 'Missing user throws TypeError.', expected: 'Return null when user is missing; otherwise return user.id.', steps: '' });
 const plan: Plan = { analysis: 'A missing user is dereferenced.', hypothesis: 'null input throws, although the contract requires null.', conclusive: true, mode: 'function', exportName: 'default', tests: [{ name: 'missing user', argsJson: '[null]', expectedJson: 'null' }, { name: 'existing user', argsJson: '[{"id":42}]', expectedJson: '42' }], limitations: [] };
@@ -66,4 +68,18 @@ test('all ten origin chapters and the final signature are preserved', async () =
 });
 test('public source list exists and contains no secret paths', async () => {
   for (const file of sourceFiles) { assert.ok(!/\.env|private|credentials/.test(file.path)); assert.ok((await readFile(file.path, 'utf8')).length > 0); }
+});
+test('ephemeral private records require the correct owner capability', async () => {
+  const result = await runExperiment(input, { ai: ai(), persistence: 'ephemeral', run: async () => evidence(true) });
+  await saveExperiment('owner-a', result);
+  assert.equal(await readExperiment('owner-b', result.id), null);
+  assert.equal((await readExperiment('owner-a', result.id))?.id, result.id);
+});
+test('origin validation uses the public host and rejects foreign origins', () => {
+  assert.equal(sameOrigin(new Request('http://localhost:3000/api/experiments', { headers: { host: '127.0.0.1:3000', origin: 'http://127.0.0.1:3000' } })), true);
+  assert.equal(sameOrigin(new Request('https://repro.example/api/experiments', { headers: { host: 'repro.example', origin: 'https://other.example' } })), false);
+  assert.equal(sameOrigin(new Request('https://repro.example/api/experiments')), false);
+});
+test('oversized request streams are rejected before JSON parsing', async () => {
+  await assert.rejects(() => limitedJson(new Request('http://localhost', { method: 'POST', body: 'a'.repeat(1001) }), 1000), /BODY_TOO_LARGE/);
 });

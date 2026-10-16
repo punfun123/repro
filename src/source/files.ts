@@ -10,4 +10,5 @@ export const sourceFiles = [
   { id: 'store', path: 'src/experiment/store.ts', description: 'Private Supabase records and explicitly ephemeral development storage.' },
   { id: 'schema', path: 'supabase/bootstrap.sql', description: 'RLS-enabled tables, revoked client grants, atomic run leases.' },
   { id: 'project', path: 'src/config/project.ts', description: 'One place to configure the token launch, official X and repository.' },
+  { id: 'tests', path: 'tests/pipeline.test.ts', description: 'Executable orchestration, privacy and safety checks. Explicit test doubles are not live AI experiments.' },
 ] as const;

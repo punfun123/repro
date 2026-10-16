@@ -13,11 +13,13 @@ export const executeSandbox: Runner = async (code, plan): Promise<Evidence> => {
   const credentials = process.env.VERCEL_TOKEN ? { token: process.env.VERCEL_TOKEN, teamId: process.env.VERCEL_TEAM_ID!, projectId: process.env.VERCEL_PROJECT_ID! } : {};
   const sandbox = await Sandbox.create({ ...credentials, image: 'vercel/sandbox/node:24', persistent: false, timeout: 30000, resources: { vcpus: 1 }, networkPolicy: 'deny-all' });
   try {
+    // Images may default to /vercel rather than /vercel/sandbox. Use absolute paths throughout.
+    await sandbox.mkDir('/vercel/sandbox');
     await sandbox.writeFiles([
-      { path: 'submission.cjs', content: Buffer.from(code) },
-      { path: 'plan.json', content: Buffer.from(JSON.stringify(plan)) },
-      { path: 'runner.cjs', content: await readFile(path.join(process.cwd(), 'scripts/runner.cjs')) },
-      { path: 'worker.cjs', content: Buffer.from(worker) },
+      { path: '/vercel/sandbox/submission.cjs', content: Buffer.from(code) },
+      { path: '/vercel/sandbox/plan.json', content: Buffer.from(JSON.stringify(plan)) },
+      { path: '/vercel/sandbox/runner.cjs', content: await readFile(path.join(process.cwd(), 'scripts/runner.cjs')) },
+      { path: '/vercel/sandbox/worker.cjs', content: Buffer.from(worker) },
     ]);
     const result = await sandbox.runCommand({ cmd: 'node', args: ['/vercel/sandbox/runner.cjs'], cwd: '/vercel/sandbox', env: {} });
     const [stdout, stderr] = await Promise.all([result.stdout(), result.stderr()]);

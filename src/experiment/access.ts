@@ -13,7 +13,13 @@ export async function sessionResponse() {
 }
 export function sameOrigin(request: Request) {
   const origin = request.headers.get('origin');
-  return !!origin && origin === new URL(request.url).origin;
+  if (!origin) return false;
+  try {
+    const source = new URL(origin);
+    const host = request.headers.get('host') || new URL(request.url).host;
+    // Next's internal request URL may use localhost behind its listener/proxy.
+    return source.host === host && source.origin === origin && (source.protocol === 'https:' || (process.env.NODE_ENV !== 'production' && source.protocol === 'http:'));
+  } catch { return false; }
 }
 export async function limitedJson(request: Request, max = 32000): Promise<unknown> {
   const reader = request.body?.getReader();

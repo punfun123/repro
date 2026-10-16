@@ -6,6 +6,7 @@ import { database, saveExperiment } from '@/experiment/store';
 import { runExperiment } from '@/experiment/pipeline';
 import { groqAI } from '@/ai/groq';
 import { executeSandbox } from '@/sandbox/execute';
+import { randomUUID } from 'node:crypto';
 export const runtime = 'nodejs';
 export const maxDuration = 240;
 export async function POST(request: Request) {
@@ -20,14 +21,20 @@ export async function POST(request: Request) {
   let release;
   try { release = await acquire(owner, request); }
   catch (error) { const reason = error instanceof Error ? error.message : 'RATE_LIMIT_UNAVAILABLE'; return Response.json({ error: reason }, { status: reason === 'RATE_LIMITED' ? 429 : 503, headers: { 'Retry-After': '60' } }); }
+  const id = randomUUID();
+  const persistence = database() ? 'supabase' as const : 'ephemeral' as const;
+  try { await saveExperiment(owner, { id, createdAt: new Date().toISOString(), input, status: 'PENDING', events: [], durationMs: 0, limitations: [], persistence }); }
+  catch { await release(); return Response.json({ error: 'PERSISTENCE_UNAVAILABLE' }, { status: 503 }); }
   const encoder = new TextEncoder(); let disconnected = false;
   const stream = new ReadableStream({
     async start(controller) {
       const send = (event: string, data: unknown) => { if (!disconnected) { try { controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`)); } catch { disconnected = true; } } };
       const heartbeat = setInterval(() => { if (!disconnected) { try { controller.enqueue(encoder.encode(': connection alive\n\n')); } catch { disconnected = true; } } }, 10000);
+      let writes = Promise.resolve();
+      let writeFailed = false;
       try {
-        const record = await runExperiment(input, { ai: groqAI, run: executeSandbox, persistence: database() ? 'supabase' : 'ephemeral', onEvent: record => send('progress', record) });
-        try { await saveExperiment(owner, record); send('result', record); }
+        const record = await runExperiment(input, { id, ai: groqAI, run: executeSandbox, persistence, onEvent: record => { send('progress', record); writes = writes.then(() => saveExperiment(owner, record)).catch(() => { writeFailed = true; }); } });
+        try { await writes; await saveExperiment(owner, record); send('result', record); if (writeFailed) console.error('REPRO intermediate persistence failed; final record was saved.'); }
         catch { send('error', { error: 'PERSISTENCE_UNAVAILABLE', message: 'Execution finished but the record could not be saved. Download the evidence now.', record }); }
       } catch { send('error', { error: 'EXECUTION_ERROR' }); }
       finally { clearInterval(heartbeat); await release(); if (!disconnected) controller.close(); }

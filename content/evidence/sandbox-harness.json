@@ -1,0 +1,15 @@
+{
+  "kind": "real-sandbox-harness-smoke-test",
+  "date": "2026-10-16",
+  "project": "prj_zRfV9AZ3JUwjRhWwwLYIeH2IZ1Ou",
+  "session": "sbx_10MdOCX4VNecubX3zkUQ2N0V9ioQ",
+  "networkPolicy": "deny-all",
+  "persistent": false,
+  "notes": [
+    "Real Vercel microVM execution via authorized Vercel connector.",
+    "Known test fixtures and test contract; no Groq call was made.",
+    "Three code variants shared one disposable harness VM. This is not a complete AI end-to-end experiment.",
+    "Candidate-fail returns normally (child exit 0), but trusted assertions fail."
+  ],
+  "output": "RUNTIME v24.19.0\n{\"name\":\"original\",\"exitCode\":1,\"stdout\":\"{\\\"testHash\\\":\\\"801b6b4a16dd33d185e874d5c694250a3815fbefaebb33c8ad9c334cc0a95ea8\\\",\\\"assertions\\\":[{\\\"name\\\":\\\"missing user\\\",\\\"expected\\\":null,\\\"error\\\":\\\"TypeError: Cannot read properties of null (reading 'id')\\\\n    at module.exports (/vercel/sandbox/submission.cjs:1:27)\\\\n    at /vercel/sandbox/worker.cjs:1:415\\\",\\\"passed\\\":false,\\\"stdout\\\":\\\"\\\",\\\"stderr\\\":\\\"TypeError: Cannot read properties of null (reading 'id')\\\\n    at module.exports (/vercel/sandbox/submission.cjs:1:27)\\\\n    at /vercel/sandbox/worker.cjs:1:415\\\",\\\"exitCode\\\":1,\\\"durationMs\\\":31},{\\\"name\\\":\\\"existing user\\\",\\\"expected\\\":42,\\\"actual\\\":42,\\\"passed\\\":true,\\\"stdout\\\":\\\"{\\\\\\\"value\\\\\\\":42}\\\",\\\"stderr\\\":\\\"\\\",\\\"exitCode\\\":0,\\\"durationMs\\\":26}]}\",\"stderr\":\"\"}\n{\"name\":\"candidate-pass\",\"exitCode\":0,\"stdout\":\"{\\\"testHash\\\":\\\"801b6b4a16dd33d185e874d5c694250a3815fbefaebb33c8ad9c334cc0a95ea8\\\",\\\"assertions\\\":[{\\\"name\\\":\\\"missing user\\\",\\\"expected\\\":null,\\\"actual\\\":null,\\\"passed\\\":true,\\\"stdout\\\":\\\"{\\\\\\\"value\\\\\\\":null}\\\",\\\"stderr\\\":\\\"\\\",\\\"exitCode\\\":0,\\\"durationMs\\\":29},{\\\"name\\\":\\\"existing user\\\",\\\"expected\\\":42,\\\"actual\\\":42,\\\"passed\\\":true,\\\"stdout\\\":\\\"{\\\\\\\"value\\\\\\\":42}\\\",\\\"stderr\\\":\\\"\\\",\\\"exitCode\\\":0,\\\"durationMs\\\":24}]}\",\"stderr\":\"\"}\n{\"name\":\"candidate-fail\",\"exitCode\":1,\"stdout\":\"{\\\"testHash\\\":\\\"801b6b4a16dd33d185e874d5c694250a3815fbefaebb33c8ad9c334cc0a95ea8\\\",\\\"assertions\\\":[{\\\"name\\\":\\\"missing user\\\",\\\"expected\\\":null,\\\"actual\\\":999,\\\"passed\\\":false,\\\"stdout\\\":\\\"{\\\\\\\"value\\\\\\\":999}\\\",\\\"stderr\\\":\\\"\\\",\\\"exitCode\\\":0,\\\"durationMs\\\":25},{\\\"name\\\":\\\"existing user\\\",\\\"expected\\\":42,\\\"actual\\\":999,\\\"passed\\\":false,\\\"stdout\\\":\\\"{\\\\\\\"value\\\\\\\":999}\\\",\\\"stderr\\\":\\\"\\\",\\\"exitCode\\\":0,\\\"durationMs\\\":25}]}\",\"stderr\":\"\"}\n"
+}

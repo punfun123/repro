@@ -35,8 +35,10 @@ export async function runExperiment(input: ExperimentInput, dependencies: { ai: 
     const status = verdict(record.verification, hash, frozen.tests.length);
     record.limitations.push('These are AI-generated targeted tests. They are evidence for the listed inputs, not proof of complete correctness. Review the test contract and patch before use.');
     emit(status, status === 'TARGET_TEST_PASSED' ? 'The frozen target tests passed. Broader behavior remains unverified.' : 'The candidate did not pass verification. The original test expectations were preserved.');
-  } catch {
-    record.error = 'A provider request or isolated execution failed. No successful verification is claimed. Check provider access and server-side diagnostics.';
+  } catch (error) {
+    record.error = error instanceof Error && error.message === 'AI_UNAVAILABLE'
+      ? 'AI UNAVAILABLE. Groq did not return a complete, validated response. No successful verification is claimed.'
+      : 'EXECUTION UNAVAILABLE. A provider request or isolated execution failed. No successful verification is claimed.';
     emit('EXECUTION_ERROR', record.error);
   }
   return record;
