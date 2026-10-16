@@ -2,11 +2,15 @@
 
 **MAKE IT BREAK FIRST.**
 
-A public software experiment: Groq proposes a hypothesis and a candidate patch; isolated execution supplies the targeted-test evidence. The token is a community identity, not a claim about investment returns or model accuracy.
+A public research environment for software failure, reproduction, diagnosis and verification. The Observatory executes bounded local behavior models and exposes their internal state. The token is a community identity, not a claim about investment returns or model accuracy.
 
 ## Current state
 
-The website, server-side pipeline, Sandbox adapter, private Supabase adapter and schema are implemented. Live execution is **off by default**. Credentials, a dedicated database migration and provider-backed verification are required before opening the lab. The site never substitutes simulated results for a missing service.
+The Observatory, Experiments and Diagnostics work without AI keys, a database or Sandbox access. Eleven distinct rule families cover nullish access, array boundaries, recursion, defaults, state identity, callback ordering, validation, regressions, sorting, retries and promise settlement. The generator-based TypeScript evaluator produces execution events with captured bindings and contexts. Draining that same evaluator produces the input heatmap and patch verification matrix. Displayed source is never evaluated in production.
+
+The public field is labeled as a **DETERMINISTIC LOCAL MODEL** with a simulated input space. Passing model conditions do not turn it into a verified historical record. The existing controlled Sandbox artifact remains a separate **VERIFIED RECORD**, with its original outputs and commit link. The earlier 24 curated fixtures remain covered by regression tests.
+
+The original server-side pipeline, Groq adapter, Sandbox adapter, private Supabase adapter, tests and schema are retained. The production research UI does not invoke them. Their live execution remains **off by default** and still requires verified provider, database and access configuration.
 
 The ten-chapter origin story in `content/story.md` is a creative narrative. It is not a record of confirmed personal experiences. The first-person development diary in `content/build-log/` follows the implementation, commits, tests and experiments that can be checked.
 
@@ -20,18 +24,19 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Visit http://127.0.0.1:3000. Without credentials, the story, source and build log work; the lab explains which service is unavailable. No code executes in the web process.
+Visit http://127.0.0.1:3000. The research pages, complete Origin story, actual Source and Build Log all work without provider credentials. The browser runs the bounded curated operation model, never pasted or generated JavaScript.
 
 ```powershell
 npm run typecheck
+npm run validate:data
 npm test
 npm run build
 npm run test:live
 ```
 
-`npm test` uses explicit test doubles to verify orchestration and safety invariants. It is **not** a live AI or Sandbox test. `npm run test:live` requires real credentials and exits 2 if they are missing. It saves private local evidence under ignored `evidence/`. Case 002 deliberately injects an incorrect candidate to test rejection; that candidate is labeled as a controlled test, not as an AI-generated patch.
+`npm run validate:data` checks the current public fields against incrementally executed assertions at multiple parameter settings, including absent contracts. It also checks the earlier fixture identities, exact diffs, graph targets and denominators. `npm test` retains earlier orchestration and safety checks and adds input-boundary, alias-snapshot, recursion-budget, scheduler and grid/trace consistency tests. In development only, trusted curated snippets execute in Node VM contexts to check output parity. These are local tests, **not** live AI or new Sandbox records. `npm run test:live` is a retained optional legacy tool requiring real credentials; it saves private evidence under ignored `evidence/`.
 
-## Configure the providers
+## Preserved provider pipeline (optional; not used by the Observatory)
 
 1. Create a Groq API key in the official Groq console and set `GROQ_API_KEY` in `.env.local` or the Vercel project's server-side environment settings. Never send keys in chat or commit them. Default model: `openai/gpt-oss-120b`. The current documented strict-output allowlist is in `src/ai/groq.ts`. Other models use JSON mode plus runtime schema validation; unsupported provider requests fail visibly.
 2. Link the **REPRO** Vercel project and run `vercel env pull .env.local` for a short-lived local OIDC credential. This replaces the local env file, so preserve manually configured values first. Deployments use automatic OIDC. External CI may use the three server variables `VERCEL_TOKEN`, `VERCEL_TEAM_ID`, `VERCEL_PROJECT_ID` instead.
@@ -64,23 +69,26 @@ Publishing requires an explicit confirmation preview. It exposes only a status r
 
 ## Routes and actual source
 
-- `/` — the complete first-person narrative, original chapter anchors and clearly marked examples.
-- `/lab` — input form, real server progress, original evidence, candidate diff, unchanged-test verification and limitations.
+- `/` — Execution Field: profiler-style event bands, variable snapshots, input heatmap, patch matrix and source comparison.
+- `/experiments` — searchable, type-filtered collection of eleven rule families with full inspection.
+- `/diagnostics` — manual investigation of the selected case, input and code version.
+- `/lab` — retained route to the same simulated experiment collection.
+- `/origin` — the complete ten-chapter first-person narrative, original chapter anchors and clearly marked examples. Old root chapter links forward here.
 - `/source` — explicit whitelist of real files, syntax highlighting and GitHub links.
 - `/build-log` and `/build-log/[slug]` — a first-person development diary grounded in source, commits, tests and recorded runs.
 - `/lab/receipt/[id]` — explicitly published minimal receipt.
 
-All routes share the story-led navigation and normal page footer. The Source file picker stays inside its page; every selected file expands in full, with long lines wrapping and no nested scrollbars. The Lab keeps its input and evidence views. A decorative Canvas distributes red pixel paths across the viewport and clears a soft area around actual text lines. The hero uses a transparent PNG cutout, so paths continue through its empty padding without a rectangular clearing or an opaque background. The text clearing is refreshed for scrolling, layout, font and content changes. Animation is capped at 20 fps on desktop and 12 fps below 760px, with device pixel ratio capped at 1.5. It stops when the page is hidden. The footer motion toggle saves a local preference; the system's reduced-motion preference always takes priority and leaves a static background. This decoration never represents experiment activity.
+All routes share the research Explorer and mobile menu. The Source file picker stays inside its page; every selected file expands in full, with long lines wrapping and no nested scrollbars. A decorative pixel Canvas fills the viewport, behind opaque instruments and masked text. Its saved motion preference and system reduced-motion setting control animation. Fine-pointer devices have a subtle cursor follower; touch and reduced-motion modes disable it. The supplied front-facing red bug is used unchanged as the small brand mark and site icon.
 
-## Visual experiment views
+## Research model and provenance
 
-The Lab's four clickable execution nodes derive from the existing SSE snapshots and status fields. `src/experiment/visualization.ts` maps waiting, running, completed, failed, unverified and skipped states. The mascot duplicates only after confirmed reproduction evidence; target-test green requires that reproduction plus consistent passing verification evidence. A proposed patch alone stays `PATCH GENERATED`. The code comparison uses `diff` for actual changed lines and Prism tokens rendered as escaped React text.
+`src/research/catalog.ts` defines eleven public models, parameterized input fields and independent contracts. `src/research/interpreter.ts` is the canonical generator evaluator. `src/research/computation.ts` derives cell observations and yields selected or sweep executions with assertions. `use-computation.ts` owns the single session consumed by all views. The earlier `cases.ts`, `engine.ts` and playback reducer remain available for fixture regression checks.
 
-The latest experiment ID is retained in tab session storage. Refresh reads the existing owner-checked API; a saved active record is polled until a terminal state is recorded. Code and logs are not stored in browser storage. The last recorded state does not establish worker liveness, and no visual timer completes a stage.
+Case and code-version selection are shareable in query parameters. Changing inputs, contracts, budgets or versions recomputes the field and resets its generator coherently. The homepage starts actual local computation automatically; manual selection interrupts it. Play, pause, step, replay and reset control generator advancement and captured-event inspection. A cycle can finish and remain inspectable. The event capture budget is 4,096; recursive depth is at most 24. Cadence changes presentation pace, never rule semantics. Auto-play pauses in a hidden document; reduced motion starts paused with manual controls available.
 
-Source's interactive `ARCHITECTURE MAP` describes static source relationships and reports only configured-credential flags for external adapters. Build Log entry 002 reads the existing public Sandbox artifact: three controlled, hand-written fixtures in one disposable VM, without a Groq call. Unrecorded aggregate timings stay unknown. The three small story inserts are labeled `ILLUSTRATIVE DEMO — NOT A LIVE AI EXPERIMENT`; the original story text and hero remain intact.
+The code comparison uses `diff` and Prism tokens rendered as escaped React text. Heatmap and matrix results share their exact input, version and contract. Expected rejection counts as meeting a contract; a normal return can still fail. Missing expectations or model-coverage limits produce UNKNOWN. No heap usage, server duration, remote AI activity or success rate is fabricated. Sorting uses an explicit reference algorithm and asynchronous ticks are logical inputs.
 
-Browser regression uses explicitly controlled local SSE and saved-record responses for unavailable provider branches. These UI test doubles are separate from the committed historical Sandbox evidence and never become production experiment data.
+Source separates the current research model from the collapsed static map of the retained provider pipeline. Build Log 002 still reads the original public Sandbox artifact: three hand-written controlled fixtures in one disposable VM, without a Groq call. Unrecorded timings stay unknown. All earlier logs and the complete raw Origin text remain unchanged.
 
 ## GitHub → Vercel
 

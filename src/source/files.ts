@@ -1,5 +1,17 @@
 // Explicit public source whitelist. Never accept a filesystem path from a request.
 export const sourceFiles = [
+  { id: 'research-interpreter', path: 'src/research/interpreter.ts', description: 'The actual generator-based evaluator. Reads, writes, calls, conditions, exceptions and returns carry captured bindings and modeled context.' },
+  { id: 'research-catalog', path: 'src/research/catalog.ts', description: 'Eleven distinct behavior models, editable input spaces, independent expected outcomes and bounded input validation.' },
+  { id: 'research-computation', path: 'src/research/computation.ts', description: 'The same rule evaluator produces the condition field and incrementally captured assertions. No separate chart semantics.' },
+  { id: 'research-values', path: 'src/research/values.ts', description: 'Finite model values and an explicit undefined sentinel. Null, undefined and valid falsy values remain distinct.' },
+  { id: 'research-controller', path: 'src/components/research/use-computation.ts', description: 'One shared session for case, parameters, code version, generator, captured events and inspection controls.' },
+  { id: 'research-computation-tests', path: 'tests/computation.test.ts', description: 'Grid/trace consistency, boundary values, alias snapshots, depth limits, logical scheduling and development-only trusted-source parity.' },
+  { id: 'research-field-validation', path: 'src/research/validate-studies.ts', description: 'Recomputes every public input and code version at multiple parameter settings, then compares each streamed assertion with the field.' },
+  { id: 'research-engine', path: 'src/research/engine.ts', description: 'Production research model: bounded operation semantics, assertions, causal topology and dataset statistics. No source evaluation or provider calls.' },
+  { id: 'research-cases', path: 'src/research/cases.ts', description: 'SIMULATED case definitions, curated source snippets, explicit contracts and candidate branches. These are not historical execution records.' },
+  { id: 'research-types', path: 'src/research/types.ts', description: 'The shared schema for modeled inputs, assertions, candidates, provenance and graph structure.' },
+  { id: 'research-playback', path: 'src/research/playback.ts', description: 'Retained deterministic stage-playback model for the earlier curated fixtures. The Execution Field now uses the generator controller.' },
+  { id: 'research-validation', path: 'src/research/validate.ts', description: 'Dataset integrity checks for unique identities, source diffs, branch targets, contracts and chart denominators.' },
   { id: 'api', path: 'src/app/api/experiments/route.ts', description: 'The owner-checked SSE entry point: input validation, limits, real progress and private persistence.' },
   { id: 'pipeline', path: 'src/experiment/pipeline.ts', description: 'The experiment state machine. Tests are fixed before patch generation.' },
   { id: 'groq', path: 'src/ai/groq.ts', description: 'Server-only Groq calls, model-aware structured output and response validation.' },

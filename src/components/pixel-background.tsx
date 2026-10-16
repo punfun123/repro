@@ -92,7 +92,7 @@ export function PixelBackground({ animated }: { animated: boolean }) {
       const range = document.createRange();
       const selectors = 'h1,h2,h3,p,a,button,label,summary,.chapter-number,.path-label,.source-file-path,.source-line-count,.lab-flow,.editor-top,.editor-bottom,.service-list,.log-intro,.log-date,.evidence-meta,.code-caption,figcaption,.launch-state,.site-footer';
       for (const element of document.querySelectorAll(selectors)) {
-        if (element.closest('pre,.code-editor,input,textarea')) continue;
+        if (element.closest('pre,.code-editor,input,textarea,.compute-field,.condition-lab,.computed-source-layout,.compute-observation-strip')) continue;
         const bounds = element.getBoundingClientRect();
         if (!bounds.width || !bounds.height || bounds.bottom < -24 || bounds.top > height + 24) continue;
         const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);

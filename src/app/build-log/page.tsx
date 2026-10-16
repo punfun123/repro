@@ -9,7 +9,7 @@ export const metadata = {
 
 type Log = Awaited<ReturnType<typeof buildLogs>>[number];
 
-const implementationSlugs = ['2026-10-16-001-first-pipeline', '2026-10-16-006-evidence-views'];
+const implementationSlugs = ['2026-10-17-007-deterministic-observatory', '2026-10-16-001-first-pipeline', '2026-10-16-006-evidence-views'];
 const verifiedRunSlugs = ['2026-10-16-002-isolated-harness'];
 
 function LogSection({ label, title, description, logs, kind }: {
@@ -51,8 +51,8 @@ export default async function BuildLog() {
     </div>
 
     <div className="log-principle">
-      <p>I freeze expected behavior first. REPRO must reproduce the original failure, then test a patch against the same assertions.</p>
-      <p>I keep implemented code distinct from completed runs. A passing target test covers only the cases listed.</p>
+      <p>I define expected behavior first, then compare an original failure and a candidate against the same assertions.</p>
+      <p>The current Observatory runs explicitly simulated models. My earlier provider pipeline and completed controlled Sandbox run remain here as separate engineering records.</p>
     </div>
 
     <LogSection

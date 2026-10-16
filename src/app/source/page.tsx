@@ -9,11 +9,13 @@ import { serviceStatus } from '@/config/services';
 export const metadata = { title: 'Source explorer' };
 export default async function Source({ searchParams }: { searchParams: Promise<{ file?: string }> }) {
   const { file } = await searchParams;
-  const selected = sourceFiles.find(source => source.id === file) || sourceFiles.find(source => source.id === 'pipeline')!;
+  const selected = sourceFiles.find(source => source.id === file) || sourceFiles.find(source => source.id === 'research-interpreter')!;
   const source = await readFile(path.join(process.cwd(), selected.path), 'utf8');
   return <div className="standard-page source-page">
-    <div className="page-heading"><span className="path-label">source / core</span><h1>The code is the evidence<span>.</span></h1><p>The actual implementation serving this project. Read it. Question it. Run it yourself.</p></div>
-    <ArchitectureMap services={serviceStatus()} repository={project.repository} selectedFile={selected.id}/>
+    <div className="page-heading"><span className="path-label">source / core</span><h1>The code is the evidence<span>.</span></h1><p>The actual implementation serving this project. Research models and historical provider code remain separately inspectable.</p></div>
+    <p className="source-domain-note">REAL PROJECT SOURCE · The engine below evaluates curated operations. Example snippets inside the case dataset are SIMULATED SOURCE, never historical runtime evidence.</p>
+    <nav className="research-module-links" aria-label="Research source relationships"><Link href="/source?file=research-catalog">Inputs / contracts</Link><span aria-hidden="true">→</span><Link href="/source?file=research-interpreter">Rule interpreter</Link><span aria-hidden="true">→</span><Link href="/source?file=research-computation">Events / assertions</Link><Link href="/source?file=research-computation-tests">Consistency tests ↗</Link></nav>
+    <details className="legacy-architecture"><summary>Preserved original provider pipeline · static architecture map</summary><p className="source-domain-note">The Observatory does not call this pipeline. Credential flags below describe existing configuration; the map does not verify service availability.</p><ArchitectureMap services={serviceStatus()} repository={project.repository} selectedFile={selected.id}/></details>
     <div className="source-repo">{project.repository ? <a href={project.repository} target="_blank" rel="noreferrer">⑂ {project.repository.replace('https://github.com/', '')} ↗</a> : <span>Local source · repository has not been published yet</span>}<span>Read-only · explicit file whitelist</span></div>
     <div className="source-layout">
       <nav aria-label="Source files" className="source-files">{sourceFiles.map(item => <Link key={item.id} href={`/source?file=${item.id}`} className={selected.id === item.id ? 'active' : ''}><span>{item.path.endsWith('.sql') ? 'SQL' : 'TS'}</span>{item.path.split('/').at(-1)}</Link>)}</nav>

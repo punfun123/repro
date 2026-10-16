@@ -9,7 +9,8 @@
     "start": "next start --hostname 127.0.0.1",
     "typecheck": "tsc --noEmit",
     "test": "tsx --test tests/*.test.ts",
-    "test:live": "tsx scripts/live-cases.ts"
+    "test:live": "tsx scripts/live-cases.ts",
+    "validate:data": "tsx scripts/validate-research.ts"
   },
   "keywords": [],
   "author": "",

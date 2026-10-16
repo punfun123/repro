@@ -11,7 +11,7 @@ export function SandboxFixtureVisualizer({ fixture, repository }: { fixture: San
   const selected = fixture.cases.find(item => item.name === selection) || fixture.cases[0];
   const passed = selected.evidence.exitCode === 0 && selected.evidence.assertions.every(test => test.passed);
   return <section className="sandbox-fixture-view" aria-label="Recorded controlled Sandbox fixture">
-    <div className="visualizer-heading"><span>SANDBOX FIXTURE · CONTROLLED TEST</span><span>{fixture.date} · Node {fixture.runtime}</span></div>
+    <div className="visualizer-heading"><span>VERIFIED RECORD · SANDBOX FIXTURE · CONTROLLED TEST</span><span>{fixture.date} · Node {fixture.runtime}</span></div>
     <p>Three hand-written fixtures shared one disposable, network-denied VM. No Groq request was made. This is recorded harness evidence, not a live AI experiment.</p>
     <ol className="fixture-nodes">{fixture.cases.map(item => { const count = item.evidence.assertions.filter(test => test.passed).length; return <li key={item.name}><button type="button" aria-pressed={selected.name === item.name} aria-controls={panelId} onClick={() => setSelection(item.name)}><span>{item.label}</span><span className={count === item.evidence.assertions.length ? 'pass-text' : 'fail-text'}>{count} / {item.evidence.assertions.length} target assertions passed</span></button></li>; })}</ol>
     <div className="fixture-inspector" id={panelId}>
