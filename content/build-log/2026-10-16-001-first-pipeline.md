@@ -1,25 +1,31 @@
-# Building an experiment that can say “unverified”
+# I froze the tests before I asked for a fix
 2026-10-16
-The first implementation separates a model’s hypothesis from the execution verdict.
+The first hard rule in my implementation was that a patch could not move the test that would judge it.
 
-The workspace started empty. This entry documents code written for this version, rather than a prior history of successful experiments.
+When I started wiring REPRO together, I had to decide where the final say would live. Letting a model describe a bug, write a fix and declare that fix successful would make the most important result depend on the same voice that proposed it. I split those jobs into separate steps and gave the runner the verdict.
 
-## What changed
+## I made expected behavior the first artifact
 
-The Next.js app now has a readable origin narrative, a JavaScript experiment form, an actual source explorer and file-backed build notes. The supplied red pixel bug is the only mascot asset.
+The first Groq call turns the report and the user's expected behavior into a small test plan: one to six named cases, JSON arguments, expected values, a hypothesis and limitations. I validate that response against a server-side Zod schema. If the behavior is ambiguous, REPRO stops at `NEEDS_REVIEW` and runs no submitted code.
 
-The experiment pipeline asks Groq to define correct-behavior assertions before seeing a patch. A server-side schema validates the result. The original and candidate run in separate Vercel microVMs. A fixed harness compares JSON return values or script stdout to the same frozen expectations. A model examines whether the original failure matches the reported bug; it does not set the verification verdict.
+That order matters. I freeze the plan before asking for a patch, so the model cannot quietly make its proposed change look successful by changing what the test expects.
 
-## Execution boundary
+## I kept the verdict outside the model
 
-`src/sandbox/execute.ts` requests a non-persistent VM with deny-all networking, one vCPU and a 30-second lifetime. The harness gives each submitted process a 2.5-second timeout, a 64 MB JavaScript heap, bounded output and Node permission restrictions. Expected values stay in the parent harness. No production environment is forwarded to user code. The VM is stopped in a finally block.
+For a valid plan, `runExperiment` keeps a canonical copy and computes a SHA-256 fingerprint from the mode, export name and assertions. Each model call and each runner receives its own clone. The trusted `verdict` function then checks the returned fingerprint, the number of assertions, the process exit code and every assertion result.
 
-## What is still a boundary
+The original code runs first in a fresh network-denied Vercel microVM. A failed assertion is only the beginning: the model has to compare the observed failure with the reported issue. An unrelated exception or an uncertain match ends as `UNVERIFIED`; no patch is requested. Only after a matching failure does REPRO ask for one candidate and run it in another clean microVM against the unchanged plan.
 
-AI-generated tests can be incomplete or wrong. Passing the listed assertions is not a general proof. This first version supports small CommonJS functions and scripts with deterministic JSON or stdout behavior; no dependencies, browser APIs, repositories or async services.
+This gives the pipeline useful ways to stop. An ambiguous report can need review. A failure that does not match can stay unverified. A candidate can fail. A target test can pass while the broader program remains unverified. I want each status to say what the evidence supports, without letting generated prose choose the status.
 
-Groq credentials and a dedicated Supabase project were not present during initialization. Live AI completion and database persistence must be verified after configuration. The public execution switch remains off by default. The repository includes reproducible tests and a provider-backed verification command; their measured results are recorded in the delivery documentation when run.
+## The boundary I left visible
 
-## Inspect the change
+This version accepts small, dependency-free CommonJS functions and deterministic scripts. It does not run packages, browser APIs, arbitrary repositories or asynchronous services. The targeted cases can be incomplete, so a pass is evidence about those listed inputs, not a general correctness proof.
 
-Open `src/experiment/pipeline.ts`, `src/verification/verdict.ts` and `scripts/runner.cjs` in the Source explorer. This note is dated for the actual implementation day. No previous commits or experiments are implied.
+I implemented the Groq and sandbox adapters, but their existence in the repository does not mean a live AI experiment has happened. Provider credentials and a dedicated configured database are still required before public execution can open. Until then, the honest result in the Lab is unavailable.
+
+The decisive choice in this first implementation was where I made REPRO stop and what the software requires before it may claim a result.
+
+## Follow the code
+
+I put the initial pipeline in [commit 0db6513](https://github.com/punfun123/repro/commit/0db6513). The public explorer opens the [pipeline](/source?file=pipeline), [Groq adapter](/source?file=groq), [sandbox runner](/source?file=sandbox), [assertion harness](/source?file=harness) and [verdict function](/source?file=verdict).

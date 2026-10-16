@@ -8,7 +8,7 @@ A public software experiment: Groq proposes a hypothesis and a candidate patch; 
 
 The website, server-side pipeline, Sandbox adapter, private Supabase adapter and schema are implemented. Live execution is **off by default**. Credentials, a dedicated database migration and provider-backed verification are required before opening the lab. The site never substitutes simulated results for a missing service.
 
-The ten-chapter origin story in `content/story.md` is a creative narrative. It is not a record of confirmed personal experiences. Actual implementation notes live in `content/build-log/`.
+The ten-chapter origin story in `content/story.md` is a creative narrative. It is not a record of confirmed personal experiences. The first-person development diary in `content/build-log/` follows the implementation, commits, tests and experiments that can be checked.
 
 ## Run locally
 
@@ -67,7 +67,7 @@ Publishing requires an explicit confirmation preview. It exposes only a status r
 - `/` — the complete first-person narrative, original chapter anchors and clearly marked examples.
 - `/lab` — input form, real server progress, original evidence, candidate diff, unchanged-test verification and limitations.
 - `/source` — explicit whitelist of real files, syntax highlighting and GitHub links.
-- `/build-log` and `/build-log/[slug]` — Markdown implementation notes.
+- `/build-log` and `/build-log/[slug]` — a first-person development diary grounded in source, commits, tests and recorded runs.
 - `/lab/receipt/[id]` — explicitly published minimal receipt.
 
 All routes share the story-led navigation and normal page footer. The Source file picker stays inside its page; every selected file expands in full, with long lines wrapping and no nested scrollbars. The Lab keeps its input and evidence views. A decorative Canvas distributes red pixel paths across the viewport and clears a soft area around actual text lines. The hero uses a transparent PNG cutout, so paths continue through its empty padding without a rectangular clearing or an opaque background. The text clearing is refreshed for scrolling, layout, font and content changes. Animation is capped at 20 fps on desktop and 12 fps below 760px, with device pixel ratio capped at 1.5. It stops when the page is hidden. The footer motion toggle saves a local preference; the system's reduced-motion preference always takes priority and leaves a static background. This decoration never represents experiment activity.

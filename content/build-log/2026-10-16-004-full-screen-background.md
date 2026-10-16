@@ -1,23 +1,23 @@
-# More background. Less scrolling inside scrolling.
+# I let the pixels fill the screen and kept the words clear
 2026-10-16
-Red pixel paths now fill the screen while clearing actual text lines. Source files open in full with wrapped lines.
+I changed two reading problems together: the background left too much unused space, and Source made readers scroll inside a code box.
 
-## Filling the space
+The first Canvas stayed near the screen edges. On a wide display, the center still looked empty. I spread the red paths and sparse pixels across the viewport, but that created a new constraint: motion had to stop at the text itself, not just at a guessed central column.
 
-The previous background kept every path close to the edges. On a wide screen, that left a large empty area around the story. I changed the layout of the paths and pixels to cover the full viewport, including the space between the headline, illustration and body.
+I built a cached offscreen mask from the actual text ranges. The Canvas clears a soft margin around each rendered line, and refreshes that mask after scrolling, resizing, font loading or content changes. I cache the paths when the viewport changes, so the animation does not keep querying text geometry on every frame. The effect stays within the existing 20 fps desktop and 12 fps mobile limits, with pixel density capped at 1.5.
 
-The background still stays behind the content. A cached Canvas mask clears the actual text lines, with a soft margin around each line. It updates after scrolling, resizing, font loading and content changes, including Source file selection. The mascot also has a clear area so paths do not cross its face or shell. The page's typography and story text are unchanged.
+## The source reader needed the same kind of restraint
 
-The existing frame limits, pixel density cap, reduced-motion setting, saved switch and hidden-tab pause remain in place. Paths are cached when the viewport changes; text geometry is not read on every idle animation frame.
+The Source page used to constrain the selected file to a fixed-height box. Long lines pushed into an inner horizontal scrollbar, while the page itself had a second scroll. I removed the height cap and let long lines wrap inside the available width. The browser page now owns the scroll; every selected file can be read from its first line to its last.
 
-## Reading the whole source
+I left the public file whitelist and syntax highlighting alone. To check that the reader still showed real source rather than a shortened display, I compared all eleven selected files against their complete local contents at both 1440 and 390 pixels. They matched, with no nested horizontal or vertical overflow.
 
-The Source page no longer clips a file to a fixed-height box. Each selected file expands to its full length, and long lines wrap within the available width. Reading uses the normal page scroll, with no horizontal or vertical scrollbar inside the code block. The public file whitelist, syntax highlighting and actual source contents are unchanged.
+## What the browser showed me
 
-## What I checked
+Chromium checks at 1920, 1440, 1024 and 390 pixels found paths and pixels across all four screen quadrants and the center. Sampling beneath the headline and a scrolled paragraph found no background marks on the text lines. I also checked the actual motion preference, switch persistence and hidden-tab pause: the background stopped when disabled, stayed still under reduced motion, and paused when the tab was hidden.
 
-Chromium checked the background at 1920, 1440, 1024 and 390px. Visible path and pixel samples appeared in all four quadrants and the center of the Canvas. Sampling the Canvas under the headline and a scrolled story paragraph found no background pixels inside those text lines.
+That blank area gave the page quiet around its words. I used more of the screen while keeping the same clear path through the story and source lines.
 
-All eleven whitelisted Source files matched their complete local contents at both 1440 and 390px, with no internal overflow. The Lab example still fills the form and live execution stays disabled. The menu still closes with Escape. No application console or runtime errors appeared.
+## Follow the change
 
-Turning animation off stops drawing and persists across reloads; reduced motion remains static. An independent Chrome session confirmed that a genuinely hidden tab kept the same frame count for 800ms and resumed drawing when selected. The existing fifteen automated tests and type check pass. These checks verify the interface, not a live AI experiment.
+I expanded the background and Source reader in [commit 95ad51c](https://github.com/punfun123/repro/commit/95ad51c). The page's source selector still serves the files listed in [`src/source/files.ts`](https://github.com/punfun123/repro/blob/main/src/source/files.ts).

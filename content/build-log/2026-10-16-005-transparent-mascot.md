@@ -1,7 +1,15 @@
-# Removing the square behind the bug.
+# I removed the dark square around the mascot
 2026-10-16
-The hero now uses a transparent PNG instead of hiding an opaque background with blending.
+The screenshot showed a black rectangle around the homepage bug, so I traced its edge back to the source image and fixed the transparency there.
 
-The earlier page treatment still left a visible square around the mascot at some sizes. I replaced the hero image with a transparent-background derivative of the supplied mascot and removed the container's background and screen blend. I also stopped clearing the full rectangular image area in the Canvas, so paths can continue through the empty space around the actual character.
+The original mascot is a square PNG with a black background. At first I tried to make it sit over the page with a matching container color and screen blending. At the reported mobile size, the square still showed. The canvas also cleared the mascot's full rectangular bounds, which left an empty patch in the moving background even where there was no character.
 
-The original supplied file is retained. The cutout and its edit prompt are documented in `content/assets/mascot-cutout.md`. Chromium checked the reported 733 × 871 viewport, a 390px phone viewport and 1440px desktop. The image corners are fully transparent, there is no horizontal overflow, navigation still works and no application errors appeared. The story, source reader and experiment API are unchanged.
+I made a transparent-background derivative of the supplied art and kept the original file intact for the other places that still use it. Then I removed the hero container's background and blend mode, and stopped clearing the Canvas across the image rectangle. The transparent pixels now reveal the page naturally around the actual character.
+
+The image corners have zero alpha, and Chromium checked the reported 733 × 871 viewport plus 390px mobile and 1440px desktop. I confirmed the hero had no opaque wrapper or blend workaround, the page did not overflow horizontally, and navigation still worked without application errors. I saved the source image and edit prompt in [`mascot-cutout.md`](https://github.com/punfun123/repro/blob/main/content/assets/mascot-cutout.md).
+
+This was a small visual fix, but it reminded me to solve the problem where it starts. A compositing trick had hidden part of the rectangle; transparency let the background and the character share the same space cleanly.
+
+## Follow the change
+
+The hero now uses the cutout introduced in [commit 45ff1f2](https://github.com/punfun123/repro/commit/45ff1f2). The actual REPRO experiment code and behavior were unchanged.
