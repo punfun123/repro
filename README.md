@@ -72,6 +72,16 @@ Publishing requires an explicit confirmation preview. It exposes only a status r
 
 All routes share the story-led navigation and normal page footer. The Source file picker stays inside its page; every selected file expands in full, with long lines wrapping and no nested scrollbars. The Lab keeps its input and evidence views. A decorative Canvas distributes red pixel paths across the viewport and clears a soft area around actual text lines. The hero uses a transparent PNG cutout, so paths continue through its empty padding without a rectangular clearing or an opaque background. The text clearing is refreshed for scrolling, layout, font and content changes. Animation is capped at 20 fps on desktop and 12 fps below 760px, with device pixel ratio capped at 1.5. It stops when the page is hidden. The footer motion toggle saves a local preference; the system's reduced-motion preference always takes priority and leaves a static background. This decoration never represents experiment activity.
 
+## Visual experiment views
+
+The Lab's four clickable execution nodes derive from the existing SSE snapshots and status fields. `src/experiment/visualization.ts` maps waiting, running, completed, failed, unverified and skipped states. The mascot duplicates only after confirmed reproduction evidence; target-test green requires that reproduction plus consistent passing verification evidence. A proposed patch alone stays `PATCH GENERATED`. The code comparison uses `diff` for actual changed lines and Prism tokens rendered as escaped React text.
+
+The latest experiment ID is retained in tab session storage. Refresh reads the existing owner-checked API; a saved active record is polled until a terminal state is recorded. Code and logs are not stored in browser storage. The last recorded state does not establish worker liveness, and no visual timer completes a stage.
+
+Source's interactive `ARCHITECTURE MAP` describes static source relationships and reports only configured-credential flags for external adapters. Build Log entry 002 reads the existing public Sandbox artifact: three controlled, hand-written fixtures in one disposable VM, without a Groq call. Unrecorded aggregate timings stay unknown. The three small story inserts are labeled `ILLUSTRATIVE DEMO — NOT A LIVE AI EXPERIMENT`; the original story text and hero remain intact.
+
+Browser regression uses explicitly controlled local SSE and saved-record responses for unavailable provider branches. These UI test doubles are separate from the committed historical Sandbox evidence and never become production experiment data.
+
 ## GitHub → Vercel
 
 Repository: https://github.com/punfun123/repro

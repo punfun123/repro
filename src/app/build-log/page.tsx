@@ -9,7 +9,7 @@ export const metadata = {
 
 type Log = Awaited<ReturnType<typeof buildLogs>>[number];
 
-const implementationSlugs = ['2026-10-16-001-first-pipeline'];
+const implementationSlugs = ['2026-10-16-001-first-pipeline', '2026-10-16-006-evidence-views'];
 const verifiedRunSlugs = ['2026-10-16-002-isolated-harness'];
 
 function LogSection({ label, title, description, logs, kind }: {

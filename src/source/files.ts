@@ -1,5 +1,6 @@
 // Explicit public source whitelist. Never accept a filesystem path from a request.
 export const sourceFiles = [
+  { id: 'api', path: 'src/app/api/experiments/route.ts', description: 'The owner-checked SSE entry point: input validation, limits, real progress and private persistence.' },
   { id: 'pipeline', path: 'src/experiment/pipeline.ts', description: 'The experiment state machine. Tests are fixed before patch generation.' },
   { id: 'groq', path: 'src/ai/groq.ts', description: 'Server-only Groq calls, model-aware structured output and response validation.' },
   { id: 'sandbox', path: 'src/sandbox/execute.ts', description: 'A fresh network-denied microVM for each original and candidate run.' },
@@ -11,4 +12,5 @@ export const sourceFiles = [
   { id: 'schema', path: 'supabase/bootstrap.sql', description: 'RLS-enabled tables, revoked client grants, atomic run leases.' },
   { id: 'project', path: 'src/config/project.ts', description: 'One place to configure the token launch, official X and repository.' },
   { id: 'tests', path: 'tests/pipeline.test.ts', description: 'Executable orchestration, privacy and safety checks. Explicit test doubles are not live AI experiments.' },
+  { id: 'visualization', path: 'src/experiment/visualization.ts', description: 'Pure mapping from actual experiment snapshots to visual stage states. It runs no experiments.' },
 ] as const;

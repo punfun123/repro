@@ -49,3 +49,13 @@ Experiment APIs, service configuration, private access controls, the source whit
 ## Saved evidence
 
 The initial reference comparison remains in `repro-design-comparison.png`. Full-screen background and expanded Source screenshots use the `repro-full-` prefix. The final matte fix is shown in `repro-mascot-733.png`, `repro-mascot-390.png` and `repro-mascot-1440.png`; live verification uses the `repro-mascot-live-` prefix. Temporary verification scripts stay outside the repository under the task's `work/` directory.
+
+## Visual experiment system regression — 2026-10-16
+
+The existing shell, complete ten-chapter story, hero, background, experiment backend and database schema are retained. The current top navigation and Source's internal file picker remain in use; the previously removed global IDE Explorer is not reintroduced.
+
+Chromium checked the final local production build at 1440 × 1000 and 390 × 844. The Browser plugin is unavailable, so repository-installed Playwright supplied interaction assertions, screenshots and console checks. The new Lab graph follows existing SSE snapshots and owner-checked saved records. Controlled local responses exercised submission, all four stages, confirmed-only mascot duplication, actual CSS search movement, target pass, failed verification, unverified reproduction, needs review, execution error, unsupported pass, refresh recovery and polling. Those responses were explicitly labeled UI test doubles and never became public experiment evidence.
+
+Original, candidate and changed-line views, clipboard access, escaped hostile output, bounded long-code scrolling, reduced motion and keyboard menu closing passed. All thirteen Source files matched their complete local contents at both widths; module links and unavailable-service flags were correct. The real committed Sandbox artifact supplied Build Log 002's three fixtures, including child exit 0 with failed assertions and harness exit 1. Missing aggregate run durations remained unrecorded. All five earlier log entries and the new implementation diary were accessible. No page overflow, uncaught application errors or injected script execution was observed.
+
+Type checking, all 25 tests (the original 15 plus 10 new evidence-view tests) and the production build passed. The genuine unavailable-service route stayed disabled, the production origin guard rejected an insecure request, unavailable execution returned 503 after its existing request checks, and an inaccessible private record returned 404. No Groq-backed end-to-end run or new live Sandbox execution is claimed. Screenshots and the detailed JSON report use the `repro-visual-` prefix outside the repository in the task outputs directory. Safari, Firefox and physical mobile devices remain untested.
