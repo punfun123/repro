@@ -1,16 +1,16 @@
 'use client';
 import { useCallback,useEffect,useRef,useState } from 'react';
 import { defaultParameters,studyCase,variants,type StudyParameters } from '@/research/catalog';
-import { computeField,executeStudy,type ComputedCell,type StudyEvent } from '@/research/computation';
+import { computeField,executeStudy,resolveCondition,type ComputedCell,type StudyEvent } from '@/research/computation';
 type Status='RUNNING'|'PAUSED'|'COMPLETE'|'LIMIT';
 export type ComputationState={caseId:string;parameters:StudyParameters;cells:ComputedCell[];cellId:string;variantId:string;mode:'sweep'|'focused';events:StudyEvent[];inspection:number;status:Status;speed:number};
-function initial(id?:string,candidate?:string):ComputationState{
+function initial(id?:string,candidate?:string,condition?:string):ComputationState{
   const study=studyCase(id);const cells=computeField(study,defaultParameters);
   const suppliedVariant=variants(study).some(variant=>variant.id===candidate);
-  return{caseId:study.id,parameters:{...defaultParameters},cells,cellId:cells[0].id,variantId:suppliedVariant?candidate!:'original',mode:suppliedVariant?'focused':'sweep',events:[],inspection:0,status:'PAUSED',speed:16};
+  return{caseId:study.id,parameters:{...defaultParameters},cells,cellId:resolveCondition(cells,condition),variantId:suppliedVariant?candidate!:'original',mode:suppliedVariant||condition?'focused':'sweep',events:[],inspection:0,status:'PAUSED',speed:16};
 }
-export function useComputation(initialId?:string,initialVariant?:string,automatic=true){
-  const[state,setState]=useState(()=>initial(initialId,initialVariant));const current=useRef(state);
+export function useComputation(initialId?:string,initialVariant?:string,automatic=true,initialCondition?:string){
+  const[state,setState]=useState(()=>initial(initialId,initialVariant,initialCondition));const current=useRef(state);
   const iterator=useRef<Generator<StudyEvent,void>|null>(null);
   const commit=useCallback((next:ComputationState)=>{current.current=next;setState(next);},[]);
   const configure=useCallback((change:Partial<Pick<ComputationState,'caseId'|'parameters'|'cellId'|'variantId'|'mode'>>,running=false)=>{

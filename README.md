@@ -2,7 +2,7 @@
 
 **MAKE IT BREAK FIRST.**
 
-A public research environment for software failure, reproduction, diagnosis and verification. The Observatory executes bounded local behavior models and exposes their internal state. The token is a community identity, not a claim about investment returns or model accuracy.
+A public research environment for software failure, reproduction, diagnosis and verification. The homepage pairs the author's premise with a running local experiment: an AI-proposed repair still needs execution evidence. The token is a community identity, not a claim about investment returns or model accuracy.
 
 ## Current state
 
@@ -12,7 +12,7 @@ The public field is labeled as a **DETERMINISTIC LOCAL MODEL** with a simulated 
 
 The original server-side pipeline, Groq adapter, Sandbox adapter, private Supabase adapter, tests and schema are retained. The production research UI does not invoke them. Their live execution remains **off by default** and still requires verified provider, database and access configuration.
 
-The ten-chapter origin story in `content/story.md` is a creative narrative. It is not a record of confirmed personal experiences. The first-person development diary in `content/build-log/` follows the implementation, commits, tests and experiments that can be checked.
+The ten-chapter origin story in `content/story.md` is a creative narrative. It is not a record of confirmed personal experiences. Historical development notes remain archived in `content/build-log/`; they have no public pages or navigation. Source exposes the original controlled Sandbox evidence separately.
 
 ## Run locally
 
@@ -24,7 +24,7 @@ Copy-Item .env.example .env.local
 npm run dev
 ```
 
-Visit http://127.0.0.1:3000. The research pages, complete Origin story, actual Source and Build Log all work without provider credentials. The browser runs the bounded curated operation model, never pasted or generated JavaScript.
+Visit http://127.0.0.1:3000. Home, Lab, the complete Origin story and actual Source all work without provider credentials. The browser runs the bounded curated operation model, never pasted or generated JavaScript.
 
 ```powershell
 npm run typecheck
@@ -69,26 +69,28 @@ Publishing requires an explicit confirmation preview. It exposes only a status r
 
 ## Routes and actual source
 
-- `/` — Execution Field: profiler-style event bands, variable snapshots, input heatmap, patch matrix and source comparison.
+- `/` — author introduction and a five-run experiment, with actual events, source, captured values and inspectable assertions.
 - `/experiments` — searchable, type-filtered collection of eleven rule families with full inspection.
 - `/diagnostics` — manual investigation of the selected case, input and code version.
-- `/lab` — retained route to the same simulated experiment collection.
+- `/lab` — full local research workspace, including case selection, parameters, profiler, input heatmap, verification matrix and source comparison.
 - `/origin` — the complete ten-chapter first-person narrative, original chapter anchors and clearly marked examples. Old root chapter links forward here.
-- `/source` — explicit whitelist of real files, syntax highlighting and GitHub links.
-- `/build-log` and `/build-log/[slug]` — a first-person development diary grounded in source, commits, tests and recorded runs.
+- `/source` — explicit whitelist of real files, syntax highlighting, GitHub links and the original controlled Sandbox record at `?file=controlled-evidence`.
+- `/build-log` and `/build-log/[slug]` — permanent redirects to Source. The former controlled-harness entry redirects directly to its evidence file.
 - `/lab/receipt/[id]` — explicitly published minimal receipt.
 
-All routes share the research Explorer and mobile menu. The Source file picker stays inside its page; every selected file expands in full, with long lines wrapping and no nested scrollbars. A decorative pixel Canvas fills the viewport, behind opaque instruments and masked text. Its saved motion preference and system reduced-motion setting control animation. Fine-pointer devices have a subtle cursor follower; touch and reduced-motion modes disable it. The supplied front-facing red bug is used unchanged as the small brand mark and site icon.
+The compact Explorer has four destinations: Home, Lab, Story and Source. Experiments and Diagnostics remain accessible from Lab. Only the navigation interior can scroll in short windows. The Source file picker stays inside its page; every selected file expands in full, with long lines wrapping and no nested scrollbars. A decorative pixel Canvas fills the viewport with sparse, dim trails behind opaque instruments and masked text. Its saved motion preference and system reduced-motion setting control animation. Fine-pointer devices have a small cursor follower; touch and reduced-motion modes disable it. The supplied front-facing red bug is used unchanged as the small brand mark and site icon.
 
 ## Research model and provenance
 
 `src/research/catalog.ts` defines eleven public models, parameterized input fields and independent contracts. `src/research/interpreter.ts` is the canonical generator evaluator. `src/research/computation.ts` derives cell observations and yields selected or sweep executions with assertions. `use-computation.ts` owns the single session consumed by all views. The earlier `cases.ts`, `engine.ts` and playback reducer remain available for fixture regression checks.
 
-Case and code-version selection are shareable in query parameters. Changing inputs, contracts, budgets or versions recomputes the field and resets its generator coherently. The homepage starts actual local computation automatically; manual selection interrupts it. Play, pause, step, replay and reset control generator advancement and captured-event inspection. A cycle can finish and remain inspectable. The event capture budget is 4,096; recursive depth is at most 24. Cadence changes presentation pace, never rule semantics. Auto-play pauses in a hidden document; reduced motion starts paused with manual controls available.
+Case and code-version selection are shareable in query parameters. The optional `condition` accepts only an authored condition ID within the selected case; invalid values fall back to its first condition. Custom inputs are never encoded as condition IDs. Changing inputs, contracts, budgets or versions recomputes the field and resets its generator coherently. The event capture budget is 4,096; recursive depth is at most 24. Cadence changes presentation pace, never rule semantics. Auto-play pauses in a hidden document; reduced motion starts paused with manual controls available.
+
+`src/research/guide.ts` advances the same evaluator through five homepage runs: original/null (TypeError), A/null (null), A/zero (incorrect null), B/null (null) and B/zero (0). `use-guide.ts` presents eight events per second with a 900 ms hold after each assertion. The completed cycle stays inspectable. Selecting a captured result pauses playback and restores that run's source and bindings; selecting an uncaptured result prepares a focused run. Replay restarts all five. The Lab link carries the exact current case, version and condition. The 48 unit tests include guide order, actual results, lazy execution, source/binding capture, deterministic replay and condition validation.
 
 The code comparison uses `diff` and Prism tokens rendered as escaped React text. Heatmap and matrix results share their exact input, version and contract. Expected rejection counts as meeting a contract; a normal return can still fail. Missing expectations or model-coverage limits produce UNKNOWN. No heap usage, server duration, remote AI activity or success rate is fabricated. Sorting uses an explicit reference algorithm and asynchronous ticks are logical inputs.
 
-Source separates the current research model from the collapsed static map of the retained provider pipeline. Build Log 002 still reads the original public Sandbox artifact: three hand-written controlled fixtures in one disposable VM, without a Groq call. Unrecorded timings stay unknown. All earlier logs and the complete raw Origin text remain unchanged.
+Source separates the current research model from the collapsed static map of the retained provider pipeline. Its controlled-evidence view reads the unchanged public Sandbox artifact: three hand-written controlled fixtures in one disposable VM, without a Groq call. Unrecorded timings stay unknown. Archived Markdown and the complete raw Origin text remain unchanged.
 
 ## GitHub → Vercel
 

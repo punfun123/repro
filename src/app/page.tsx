@@ -1,6 +1,3 @@
-import { ResearchWorkspace } from '@/components/research/workspace';
-export const metadata = { title: 'The Bug Observatory', description: 'A deterministic research environment for software failure, reproduction and verification. Explicitly simulated scenarios, inspectable source and preserved execution evidence.' };
-export default async function Home({ searchParams }: { searchParams: Promise<{ case?: string; candidate?: string }> }) {
-  const params = await searchParams;
-  return <ResearchWorkspace key={(params.case || '') + (params.candidate || '')} initialCase={params.case} initialCandidate={params.candidate}/>;
-}
+import { ResearchHome } from '@/components/research/home';
+export const metadata = { title: { absolute: 'REPRO — Make it break first.' }, description: 'AI can suggest a fix. I want it to prove one. Follow an independent developer experiment in reproduction, repair and evidence.' };
+export default function Home() { return <ResearchHome/>; }

@@ -18,10 +18,10 @@ export default async function Origin() {
       <p className="story-subtitle">Why I’m building an AI that has to prove its answers.</p>
       <div className="story-actions">
         <a className="story-read-link" href="#chapter-1">Read my story <span aria-hidden="true">→</span></a>
-        <Link href="/experiments">Explore the models <span aria-hidden="true">↗</span></Link>
+        <Link href="/lab">Explore the models <span aria-hidden="true">↗</span></Link>
       </div>
       <p className="author-signature">— REPRO Developer</p>
-      <p className="author-note">I wrote this as a creative origin story. My <Link href="/build-log">build log</Link> records what I’ve actually built and tested.</p>
+      <p className="author-note">I wrote this as a creative origin story. My <Link href="/source">source and recorded evidence</Link> show what I’ve actually built and tested.</p>
       <p className="origin-context">Preserved author narrative. The current Observatory runs explicitly simulated scenarios; the original provider pipeline remains available to inspect in Source.</p>
     </header>
 

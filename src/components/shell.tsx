@@ -10,7 +10,6 @@ const pages = [
   { href: '/', label: 'Story' },
   { href: '/lab', label: 'Lab' },
   { href: '/source', label: 'Source' },
-  { href: '/build-log', label: 'Build log' },
 ];
 
 export function Shell({ children }: { children: React.ReactNode }) {

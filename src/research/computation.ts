@@ -6,6 +6,10 @@ export type ResultState='PASS'|'REJECTED'|'EXCEPTION'|'FAIL'|'UNKNOWN';
 export type Observation={outcome:Outcome;expected?:Outcome;passed:boolean|null;state:ResultState};
 export type ComputedCell=ConditionInput&{expected?:Outcome;results:Record<string,Observation>};
 export type StudyEvent=ExecutionEvent&{sequence:number;cellId:string;variantId:string;input:Value;outcome?:Outcome;expected?:Outcome};
+// URL state may restore an authored condition, never an unpersisted custom input.
+export function resolveCondition(cells:{id:string}[],requested?:string):string{
+  return cells.find(cell=>cell.id!=='custom'&&cell.id===requested)?.id||cells[0].id;
+}
 export function observation(actual:Outcome,expected?:Outcome):Observation {
   const unknown=!expected||actual.error?.startsWith('MODEL_');
   const passed=unknown?null:sameOutcome(actual,expected!);

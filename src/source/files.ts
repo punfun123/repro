@@ -1,5 +1,8 @@
 // Explicit public source whitelist. Never accept a filesystem path from a request.
 export const sourceFiles = [
+  { id: 'research-guide', path: 'src/research/guide.ts', description: 'Five homepage runs use the same real rule evaluator: a null-access exception, an incomplete guard and a tested nullish guard.' },
+  { id: 'research-guide-tests', path: 'tests/guide.test.ts', description: 'Executable checks for the five-run sequence, unchanged contracts, deterministic replay and exact Lab condition links.' },
+  { id: 'controlled-evidence', path: 'content/evidence/sandbox-harness.json', description: 'The original recorded Sandbox artifact, unchanged. Three handwritten fixtures shared one controlled VM; no Groq call was made.' },
   { id: 'research-interpreter', path: 'src/research/interpreter.ts', description: 'The actual generator-based evaluator. Reads, writes, calls, conditions, exceptions and returns carry captured bindings and modeled context.' },
   { id: 'research-catalog', path: 'src/research/catalog.ts', description: 'Eleven distinct behavior models, editable input spaces, independent expected outcomes and bounded input validation.' },
   { id: 'research-computation', path: 'src/research/computation.ts', description: 'The same rule evaluator produces the condition field and incrementally captured assertions. No separate chart semantics.' },

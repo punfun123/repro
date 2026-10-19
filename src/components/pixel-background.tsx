@@ -59,9 +59,9 @@ export function PixelBackground({ animated }: { animated: boolean }) {
     const seed = (index: number) => fraction(Math.sin(index * 127.1 + 31.7) * 43758.5453);
 
     function buildRoutes() {
-      const unit = mobile ? 28 : 48;
-      const columns = Math.ceil(width / (mobile ? 145 : 280));
-      const rows = Math.min(8, Math.ceil(height / (mobile ? 160 : 190)));
+      const unit = mobile ? 22 : 34;
+      const columns = Math.ceil(width / (mobile ? 220 : 380));
+      const rows = Math.min(6, Math.ceil(height / (mobile ? 230 : 260)));
       const snap = (value: number) => Math.round(value / unit) * unit;
       const clamp = (value: number, limit: number) => Math.max(-unit, Math.min(limit + unit, value));
       routes = Array.from({ length: columns * rows }, (_, i) => {
@@ -71,8 +71,8 @@ export function PixelBackground({ animated }: { animated: boolean }) {
         path.moveTo(x, y);
         const horizontal = seed(i + 57) > 0.5 ? 1 : -1;
         const vertical = seed(i + 72) > 0.5 ? 1 : -1;
-        for (let step = 0; step < 6; step++) {
-          const length = unit * (1 + Math.floor(seed(i * 7 + step + 110) * 3));
+        for (let step = 0; step < 4; step++) {
+          const length = unit * (1 + Math.floor(seed(i * 7 + step + 110) * 2));
           if (step % 2 === 0) x = clamp(x + horizontal * length, width);
           else y = clamp(y + vertical * length, height);
           path.lineTo(x, y);
@@ -92,7 +92,7 @@ export function PixelBackground({ animated }: { animated: boolean }) {
       const range = document.createRange();
       const selectors = 'h1,h2,h3,p,a,button,label,summary,.chapter-number,.path-label,.source-file-path,.source-line-count,.lab-flow,.editor-top,.editor-bottom,.service-list,.log-intro,.log-date,.evidence-meta,.code-caption,figcaption,.launch-state,.site-footer';
       for (const element of document.querySelectorAll(selectors)) {
-        if (element.closest('pre,.code-editor,input,textarea,.compute-field,.condition-lab,.computed-source-layout,.compute-observation-strip')) continue;
+        if (element.closest('pre,.code-editor,input,textarea,.compute-field,.condition-lab,.computed-source-layout,.compute-observation-strip,.guided-experiment,.home-proof,.home-method')) continue;
         const bounds = element.getBoundingClientRect();
         if (!bounds.width || !bounds.height || bounds.bottom < -24 || bounds.top > height + 24) continue;
         const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
@@ -121,26 +121,26 @@ export function PixelBackground({ animated }: { animated: boolean }) {
 
       for (const [i, route] of routes.entries()) {
         context!.lineWidth = 1;
-        context!.strokeStyle = mobile ? 'rgba(167,40,31,0.23)' : 'rgba(167,40,31,0.3)';
+        context!.strokeStyle = mobile ? 'rgba(167,40,31,0.1)' : 'rgba(167,40,31,0.14)';
         context!.setLineDash([]);
         context!.stroke(route.path);
-        context!.setLineDash([16, 240]);
-        context!.lineDashOffset = -(time * 7 + i * 43);
-        context!.strokeStyle = 'rgba(219,54,38,0.48)';
+        context!.setLineDash([10, 200]);
+        context!.lineDashOffset = -(time * 5 + i * 43);
+        context!.strokeStyle = 'rgba(219,54,38,0.27)';
         context!.stroke(route.path);
         if (i % 3 === 0) {
-          context!.fillStyle = 'rgba(205,45,33,0.37)';
-          context!.fillRect(route.x - 2, route.y - 2, 4, 4);
+          context!.fillStyle = 'rgba(205,45,33,0.2)';
+          context!.fillRect(route.x - 1, route.y - 1, 2, 2);
         }
       }
       context!.setLineDash([]);
 
-      const pixels = mobile ? 38 : Math.min(120, Math.ceil(width * height / 15000));
+      const pixels = mobile ? 22 : Math.min(72, Math.ceil(width * height / 24000));
       for (let i = 0; i < pixels; i++) {
         const x = seed(i + 40) * width;
         const y = (seed(i + 100) * (height + 40) + time * (1.1 + seed(i + 15) * 2)) % (height + 40) - 20;
-        const size = mobile ? 2 + seed(i + 55) * 2 : 2 + Math.floor(seed(i + 55) * 5);
-        context!.fillStyle = `rgba(218,48,34,${0.2 + seed(i + 60) * (mobile ? 0.23 : 0.32)})`;
+        const size = mobile ? 1 + seed(i + 55) * 2 : 1 + Math.floor(seed(i + 55) * 3);
+        context!.fillStyle = `rgba(218,48,34,${0.12 + seed(i + 60) * 0.18})`;
         context!.fillRect(Math.round(x), Math.round(y), size, size);
       }
 
